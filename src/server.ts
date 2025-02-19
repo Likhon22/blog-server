@@ -1,11 +1,18 @@
 import express, { Request, Response } from 'express';
-const app = express();
-const port = 3000;
+import mongoose from 'mongoose';
+import { Server } from 'http';
+import { app } from './app';
+import config from './app/config';
+let server: Server;
+async function main() {
+  try {
+    await mongoose.connect('mongodb://127.0.0.1:27017/test');
+    server = app.listen(config.port, () => {
+      console.log(` Server is running on port ${config.port}`);
+    });
+  } catch (err) {
+    console.log(err);
+  }
+}
 
-app.get('/', (req: Request, res: Response) => {
-  res.send('Hello World!');
-});
-
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
-});
+main();
