@@ -5,4 +5,8 @@ const createUserValidationSchema = z.object({
   email: z.string({ required_error: 'email is required' }).email(),
 });
 
-export default createUserValidationSchema;
+const userValidations = {
+  createUserValidationSchema,
+};
+
+export default userValidations;

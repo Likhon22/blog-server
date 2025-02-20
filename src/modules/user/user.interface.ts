@@ -3,6 +3,7 @@ import { Model } from 'mongoose';
 type TUser = {
   name: string;
   email: string;
+  _id: string;
 
   role: 'admin' | 'user';
   isDeleted: boolean;

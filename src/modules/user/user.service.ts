@@ -7,6 +7,7 @@ const createUserIntoDB = async (userInfo: TUser) => {
   if (isUserExists) {
     throw new AppError(400, 'User already exists');
   }
+  userInfo.role = 'user';
   const user = await User.create(userInfo);
   return user;
 };
