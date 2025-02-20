@@ -1,9 +1,9 @@
 import { Model } from 'mongoose';
 
 type TUser = {
+  _id: string;
   name: string;
   email: string;
-  _id: string;
 
   role: 'admin' | 'user';
   isDeleted: boolean;
