@@ -10,4 +10,5 @@ routes.post(
   userControllers.createUser,
 );
 routes.post('/login', userControllers.loginUser);
+routes.get('/all-users', userControllers.getUsers);
 export const userRoutes = routes;

@@ -19,6 +19,10 @@ const userSchema = new Schema<TUser, UserModel>(
 userSchema.statics.isUserExists = async function (email: string) {
   return await User.findOne({ email });
 };
+userSchema.pre('find', function (next) {
+  this.where({ isDeleted: false });
+  next();
+});
 const User = model<TUser, UserModel>('User', userSchema);
 
 export default User;

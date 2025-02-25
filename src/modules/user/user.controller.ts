@@ -22,9 +22,19 @@ const loginUser = catchAsync(async (req, res) => {
     data: user,
   });
 });
+const getUsers = catchAsync(async (req, res) => {
+  const users = await userServices.getAllUserFromDB(req.query);
+  sendResponse(res, {
+    message: 'All users fetched successfully',
+    statusCode: 200,
+    success: true,
+    data: users,
+  });
+});
 const userControllers = {
   createUser,
   loginUser,
+  getUsers,
 };
 
 export default userControllers;
