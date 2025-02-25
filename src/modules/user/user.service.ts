@@ -11,9 +11,19 @@ const createUserIntoDB = async (userInfo: TUser) => {
   const user = await User.create(userInfo);
   return user;
 };
+const loginUserIntoDB = async (userInfo: TUser) => {
+  let user = await User.findOne({ email: userInfo.email });
+  if (!user) {
+    userInfo.role = 'user';
+    user = await User.create(userInfo);
+  }
+
+  return user;
+};
 
 const userServices = {
   createUserIntoDB,
+  loginUserIntoDB,
 };
 
 export default userServices;

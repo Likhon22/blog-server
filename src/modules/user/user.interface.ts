@@ -4,7 +4,7 @@ type TUser = {
   _id: string;
   name: string;
   email: string;
-
+  userImage?: string;
   role: 'admin' | 'user';
   isDeleted: boolean;
 };
