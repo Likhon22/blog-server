@@ -14,7 +14,8 @@ const createArticles = catchAsync(async (req, res) => {
 });
 
 const getArticles = catchAsync(async (req, res) => {
-  const articles = await articleServices.getAllArticlesFromDB();
+  const articles = await articleServices.getAllArticlesFromDB(req.query);
+
   sendResponse(res, {
     data: articles,
     message: 'All articles fetched successfully',
@@ -34,10 +35,23 @@ const getSingleArticle = catchAsync(async (req, res) => {
   });
 });
 
+const updateArticle = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  const payload = req.body;
+  const article = await articleServices.updateArticleFromDB(id, payload);
+  sendResponse(res, {
+    data: article,
+    message: 'Article updated successfully',
+    statusCode: 200,
+    success: true,
+  });
+});
+
 const articleControllers = {
   createArticles,
   getArticles,
   getSingleArticle,
+  updateArticle,
 };
 
 export default articleControllers;

@@ -15,4 +15,10 @@ router.get('/all-articles', articleControllers.getArticles);
 
 router.get('/single-article/:id', articleControllers.getSingleArticle);
 
+router.put(
+  '/update-article/:id',
+  validateRequest(articleValidations.updateArticleValidationSchema),
+  articleControllers.updateArticle,
+);
+
 export const articleRoutes = router;

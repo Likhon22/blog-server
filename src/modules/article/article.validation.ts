@@ -7,9 +7,14 @@ const createArticleValidationSchema = z.object({
     .nonempty('category cannot be empty'),
   post: z.string({ required_error: 'post is required' }).nonempty(),
 });
-
+const updateArticleValidationSchema = z.object({
+  title: z.string().optional(),
+  category: z.string().optional(),
+  post: z.string().optional(),
+});
 const articleValidations = {
   createArticleValidationSchema,
+  updateArticleValidationSchema,
 };
 
 export default articleValidations;
