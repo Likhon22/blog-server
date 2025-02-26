@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import mongoose from 'mongoose';
 import User from '../user/user.model';
 import TArticle from './article.interface';
@@ -5,7 +6,7 @@ import Article from './article.model';
 import QueryBuilder from '../../app/builder/QueryBuilder';
 import { articleSearchableFields } from './article.constants';
 
-const createArticleIntoDB = async (article) => {
+const createArticleIntoDB = async (article:any) => {
   const user = await User.isUserExists(article.authorEmail);
 
   if (!user) {
