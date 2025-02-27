@@ -17,7 +17,8 @@ const getArticles = catchAsync(async (req, res) => {
   const articles = await articleServices.getAllArticlesFromDB(req.query);
 
   sendResponse(res, {
-    data: articles,
+    data: articles.articles,
+    meta: articles.meta,
     message: 'All articles fetched successfully',
     statusCode: 200,
     success: true,
@@ -46,12 +47,23 @@ const updateArticle = catchAsync(async (req, res) => {
     success: true,
   });
 });
+const deleteArticle = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  const result = await articleServices.deleteArticleFromDB(id);
+  sendResponse(res, {
+    message: 'Article deleted successfully',
+    statusCode: 200,
+    success: true,
+    data: result,
+  });
+});
 
 const articleControllers = {
   createArticles,
   getArticles,
   getSingleArticle,
   updateArticle,
+  deleteArticle,
 };
 
 export default articleControllers;

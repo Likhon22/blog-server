@@ -6,7 +6,7 @@ import Article from './article.model';
 import QueryBuilder from '../../app/builder/QueryBuilder';
 import { articleSearchableFields } from './article.constants';
 
-const createArticleIntoDB = async (article:any) => {
+const createArticleIntoDB = async (article: any) => {
   const user = await User.isUserExists(article.authorEmail);
 
   if (!user) {
@@ -39,7 +39,8 @@ const getAllArticlesFromDB = async (queries: Record<string, unknown>) => {
     .fields();
 
   const articles = await articleQuery.modelQuery;
-  return articles;
+  const meta = await articleQuery.countTotal();
+  return { articles, meta };
 };
 const getSingleArticleFromDB = async (id: string) => {
   const article = await Article.findById(id);
@@ -51,12 +52,17 @@ const updateArticleFromDB = async (id: string, payload: Partial<TArticle>) => {
   });
   return article;
 };
+const deleteArticleFromDB = async (id: string) => {
+  const article = await Article.findByIdAndDelete(id);
+  return article;
+};
 
 const articleServices = {
   createArticleIntoDB,
   getAllArticlesFromDB,
   getSingleArticleFromDB,
   updateArticleFromDB,
+  deleteArticleFromDB,
 };
 
 export default articleServices;

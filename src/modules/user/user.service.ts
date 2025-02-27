@@ -29,10 +29,18 @@ const getAllUserFromDB = async (query: Record<string, unknown>) => {
   const user = await userQuery.modelQuery;
   return user;
 };
+const getSingleUserFromDB = async (email: string) => {
+  const isUserExists = await User.isUserExists(email);
+  if (!isUserExists) {
+    throw new AppError(404, 'User not found');
+  }
+  return isUserExists;
+};
 const userServices = {
   createUserIntoDB,
   loginUserIntoDB,
   getAllUserFromDB,
+  getSingleUserFromDB,
 };
 
 export default userServices;

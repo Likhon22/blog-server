@@ -20,5 +20,6 @@ router.put(
   validateRequest(articleValidations.updateArticleValidationSchema),
   articleControllers.updateArticle,
 );
+router.delete('/:id', articleControllers.deleteArticle);
 
 export const articleRoutes = router;

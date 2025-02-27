@@ -11,4 +11,5 @@ routes.post(
 );
 routes.post('/login', userControllers.loginUser);
 routes.get('/all-users', userControllers.getUsers);
+routes.get('/:email', userControllers.getSingleUser);
 export const userRoutes = routes;

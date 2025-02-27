@@ -31,10 +31,23 @@ const getUsers = catchAsync(async (req, res) => {
     data: users,
   });
 });
+
+const getSingleUser = catchAsync(async (req, res) => {
+  const { email } = req.params;
+  const user = await userServices.getSingleUserFromDB(email);
+  sendResponse(res, {
+    message: 'User fetched successfully',
+    statusCode: 200,
+    success: true,
+    data: user,
+  });
+});
+
 const userControllers = {
   createUser,
   loginUser,
   getUsers,
+  getSingleUser,
 };
 
 export default userControllers;
