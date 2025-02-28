@@ -6,7 +6,7 @@ const articleSchema = new Schema<TArticle>(
     title: { type: String, required: true },
     category: { type: String, required: true },
     post: { type: String, required: true },
-    author: { type: Schema.Types.ObjectId, required: true },
+    author: { type: Schema.Types.ObjectId, ref: 'User', required: true },
   },
   { timestamps: true },
 );

@@ -19,8 +19,10 @@ const createArticleIntoDB = async (article: any) => {
 
 const getAllArticlesFromDB = async (queries: Record<string, unknown>) => {
   // Check if filtering by email (author)
+
   if (queries.email) {
     const user = await User.isUserExists(queries.email as string);
+
     if (!user) {
       throw new Error('User not found');
     }
@@ -43,7 +45,7 @@ const getAllArticlesFromDB = async (queries: Record<string, unknown>) => {
   return { articles, meta };
 };
 const getSingleArticleFromDB = async (id: string) => {
-  const article = await Article.findById(id);
+  const article = await Article.findById(id).populate('author');
   return article;
 };
 const updateArticleFromDB = async (id: string, payload: Partial<TArticle>) => {

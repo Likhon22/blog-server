@@ -15,10 +15,15 @@ const getAllCategoriesFromDB = async () => {
   const categories = await Category.find();
   return categories;
 };
+const deleteCategoryFromDB = async (id: string) => {
+  const category = await Category.findByIdAndDelete(id);
+  return category;
+};
 
 const categoryServices = {
   createCategoryIntoDB,
   getAllCategoriesFromDB,
+  deleteCategoryFromDB,
 };
 
 export default categoryServices;
