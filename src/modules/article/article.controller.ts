@@ -57,6 +57,15 @@ const deleteArticle = catchAsync(async (req, res) => {
     data: result,
   });
 });
+const getFeaturedArticle = catchAsync(async (req, res) => {
+  const article = await articleServices.getFeaturedArticleFromDB();
+  sendResponse(res, {
+    data: article,
+    message: 'Featured article fetched successfully',
+    statusCode: 200,
+    success: true,
+  });
+});
 
 const articleControllers = {
   createArticles,
@@ -64,6 +73,7 @@ const articleControllers = {
   getSingleArticle,
   updateArticle,
   deleteArticle,
+  getFeaturedArticle,
 };
 
 export default articleControllers;

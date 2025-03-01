@@ -21,5 +21,6 @@ router.put(
   articleControllers.updateArticle,
 );
 router.delete('/:id', articleControllers.deleteArticle);
+router.get('/featured-article', articleControllers.getFeaturedArticle);
 
 export const articleRoutes = router;

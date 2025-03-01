@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import mongoose from 'mongoose';
 import User from '../user/user.model';
@@ -5,6 +6,7 @@ import TArticle from './article.interface';
 import Article from './article.model';
 import QueryBuilder from '../../app/builder/QueryBuilder';
 import { articleSearchableFields } from './article.constants';
+import AppError from '../../app/error/AppError';
 
 const createArticleIntoDB = async (article: any) => {
   const user = await User.isUserExists(article.authorEmail);
@@ -49,13 +51,39 @@ const getSingleArticleFromDB = async (id: string) => {
   return article;
 };
 const updateArticleFromDB = async (id: string, payload: Partial<TArticle>) => {
-  const article = await Article.findByIdAndUpdate({ _id: id }, payload, {
-    new: true,
-  });
-  return article;
+  const session = await mongoose.startSession();
+  session.startTransaction();
+
+  try {
+    if (payload.featured) {
+      const articles = await Article.find({ featured: true }).session(session);
+      for (const article of articles) {
+        article.featured = false;
+        await article.save({ session });
+      }
+    }
+
+    const article = await Article.findByIdAndUpdate({ _id: id }, payload, {
+      new: true,
+      session,
+    });
+
+    await session.commitTransaction();
+    session.endSession();
+    return article;
+  } catch (error) {
+    await session.abortTransaction(); // Rollback changes
+    session.endSession();
+
+    throw new AppError(400, 'Failed to update article');
+  }
 };
 const deleteArticleFromDB = async (id: string) => {
   const article = await Article.findByIdAndDelete(id);
+  return article;
+};
+const getFeaturedArticleFromDB = async () => {
+  const article = await Article.findOne({ featured: true });
   return article;
 };
 
@@ -65,6 +93,7 @@ const articleServices = {
   getSingleArticleFromDB,
   updateArticleFromDB,
   deleteArticleFromDB,
+  getFeaturedArticleFromDB,
 };
 
 export default articleServices;
