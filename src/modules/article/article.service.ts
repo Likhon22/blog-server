@@ -83,7 +83,7 @@ const deleteArticleFromDB = async (id: string) => {
   return article;
 };
 const getFeaturedArticleFromDB = async () => {
-  const article = await Article.findOne({ featured: true });
+  const article = await Article.findOne({ featured: true }).populate('author');
   return article;
 };
 

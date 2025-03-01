@@ -43,11 +43,24 @@ const getSingleUser = catchAsync(async (req, res) => {
   });
 });
 
+const updateUser = catchAsync(async (req, res) => {
+  const { userId } = req.params;
+  const { role, email } = req.body;
+
+  const user = await userServices.updateUserRoleInDB(userId, role, email);
+  sendResponse(res, {
+    message: 'User role updated successfully',
+    statusCode: 200,
+    success: true,
+    data: user,
+  });
+});
 const userControllers = {
   createUser,
   loginUser,
   getUsers,
   getSingleUser,
+  updateUser,
 };
 
 export default userControllers;

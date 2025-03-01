@@ -36,11 +36,28 @@ const getSingleUserFromDB = async (email: string) => {
   }
   return isUserExists;
 };
+const updateUserRoleInDB = async (
+  userId: string,
+  role: string,
+  email: string,
+) => {
+  const isUserExists = await User.isUserExists(email);
+  if (isUserExists?.role !== 'admin') {
+    throw new AppError(403, 'You are not authorized to update role');
+  }
+  const user = await User.findByIdAndUpdate(
+    { _id: userId },
+    { role },
+    { new: true },
+  );
+  return user;
+};
 const userServices = {
   createUserIntoDB,
   loginUserIntoDB,
   getAllUserFromDB,
   getSingleUserFromDB,
+  updateUserRoleInDB,
 };
 
 export default userServices;

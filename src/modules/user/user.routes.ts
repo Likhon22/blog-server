@@ -12,4 +12,9 @@ routes.post(
 routes.post('/login', userControllers.loginUser);
 routes.get('/all-users', userControllers.getUsers);
 routes.get('/:email', userControllers.getSingleUser);
+routes.patch(
+  '/update-role/:userId',
+  validateRequest(userValidations.updateUserValidationSchema),
+  userControllers.updateUser,
+);
 export const userRoutes = routes;
