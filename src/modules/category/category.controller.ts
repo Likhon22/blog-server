@@ -1,8 +1,9 @@
+import { Request, Response } from 'express';
 import catchAsync from '../../app/utils/catchAsync';
 import sendResponse from '../../app/utils/sendResponse';
 import categoryServices from './category.service';
 
-const createCategory = catchAsync(async (req, res) => {
+const createCategory = catchAsync(async (req: Request, res: Response) => {
   const categoryInfo = req.body;
   const result = await categoryServices.createCategoryIntoDB(categoryInfo);
   sendResponse(res, {
@@ -13,7 +14,7 @@ const createCategory = catchAsync(async (req, res) => {
   });
 });
 
-const getAllCategories = catchAsync(async (req, res) => {
+const getAllCategories = catchAsync(async (req: Request, res: Response) => {
   const categories = await categoryServices.getAllCategoriesFromDB();
   sendResponse(res, {
     statusCode: 200,
@@ -22,7 +23,7 @@ const getAllCategories = catchAsync(async (req, res) => {
     success: true,
   });
 });
-const deleteCategory = catchAsync(async (req, res) => {
+const deleteCategory = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
   const result = await categoryServices.deleteCategoryFromDB(id);
   sendResponse(res, {

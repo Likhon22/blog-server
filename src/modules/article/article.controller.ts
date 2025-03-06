@@ -1,8 +1,9 @@
+import { Request, Response } from 'express';
 import catchAsync from '../../app/utils/catchAsync';
 import sendResponse from '../../app/utils/sendResponse';
 import articleServices from './article.service';
 
-const createArticles = catchAsync(async (req, res) => {
+const createArticles = catchAsync(async (req: Request, res: Response) => {
   const articles = req.body;
   const result = await articleServices.createArticleIntoDB(articles);
   sendResponse(res, {
@@ -13,7 +14,7 @@ const createArticles = catchAsync(async (req, res) => {
   });
 });
 
-const getArticles = catchAsync(async (req, res) => {
+const getArticles = catchAsync(async (req: Request, res: Response) => {
   const articles = await articleServices.getAllArticlesFromDB(req.query);
 
   sendResponse(res, {
@@ -25,7 +26,7 @@ const getArticles = catchAsync(async (req, res) => {
   });
 });
 
-const getSingleArticle = catchAsync(async (req, res) => {
+const getSingleArticle = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
   const article = await articleServices.getSingleArticleFromDB(id);
   sendResponse(res, {
@@ -36,7 +37,7 @@ const getSingleArticle = catchAsync(async (req, res) => {
   });
 });
 
-const updateArticle = catchAsync(async (req, res) => {
+const updateArticle = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
   const payload = req.body;
   const article = await articleServices.updateArticleFromDB(id, payload);
@@ -47,7 +48,7 @@ const updateArticle = catchAsync(async (req, res) => {
     success: true,
   });
 });
-const deleteArticle = catchAsync(async (req, res) => {
+const deleteArticle = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
   const result = await articleServices.deleteArticleFromDB(id);
   sendResponse(res, {
@@ -57,7 +58,7 @@ const deleteArticle = catchAsync(async (req, res) => {
     data: result,
   });
 });
-const getFeaturedArticle = catchAsync(async (req, res) => {
+const getFeaturedArticle = catchAsync(async (req: Request, res: Response) => {
   const article = await articleServices.getFeaturedArticleFromDB();
   sendResponse(res, {
     data: article,

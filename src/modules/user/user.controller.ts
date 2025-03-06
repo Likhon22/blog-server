@@ -1,8 +1,9 @@
+import { Request, Response } from 'express';
 import catchAsync from '../../app/utils/catchAsync';
 import sendResponse from '../../app/utils/sendResponse';
 import userServices from './user.service';
 
-const createUser = catchAsync(async (req, res) => {
+const createUser = catchAsync(async (req: Request, res: Response) => {
   const userInfo = req.body;
   const user = await userServices.createUserIntoDB(userInfo);
   sendResponse(res, {
@@ -12,7 +13,7 @@ const createUser = catchAsync(async (req, res) => {
     data: user,
   });
 });
-const loginUser = catchAsync(async (req, res) => {
+const loginUser = catchAsync(async (req: Request, res: Response) => {
   const userInfo = req.body;
   const user = await userServices.loginUserIntoDB(userInfo);
   sendResponse(res, {
@@ -22,7 +23,7 @@ const loginUser = catchAsync(async (req, res) => {
     data: user,
   });
 });
-const getUsers = catchAsync(async (req, res) => {
+const getUsers = catchAsync(async (req: Request, res: Response) => {
   const users = await userServices.getAllUserFromDB(req.query);
   sendResponse(res, {
     message: 'All users fetched successfully',
@@ -32,7 +33,7 @@ const getUsers = catchAsync(async (req, res) => {
   });
 });
 
-const getSingleUser = catchAsync(async (req, res) => {
+const getSingleUser = catchAsync(async (req: Request, res: Response) => {
   const { email } = req.params;
   const user = await userServices.getSingleUserFromDB(email);
   sendResponse(res, {
@@ -43,7 +44,7 @@ const getSingleUser = catchAsync(async (req, res) => {
   });
 });
 
-const updateUser = catchAsync(async (req, res) => {
+const updateUser = catchAsync(async (req: Request, res: Response) => {
   const { userId } = req.params;
   const { role, email } = req.body;
 
